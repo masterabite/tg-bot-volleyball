@@ -1,0 +1,31 @@
+#   Visual Studio
+.vs/
+.vscode/
+x64/
+*.sln
+*.vcxproj*
+
+#   build
+build*/
+out*/
+
+#   TgBot
+tgbot-cpp/
+users.json
+
+#   testApps
+*.out
+*.exe
+
+#   git
+.githelp
+
+#   source
+sudoku_*.*
+src/modules/Sudoku/NN/*.jpg
+src/modules/Sudoku/NN/Dataset/*.jpg
+src/modules/Sudoku/NN/Train
+
+#   NN
+# src/modules/Sudoku/CNN.json
+# src/modules/Sudoku/CNN.bin
