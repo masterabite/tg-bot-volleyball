@@ -21,11 +21,3 @@ users.json
 .githelp
 
 #   source
-sudoku_*.*
-src/modules/Sudoku/NN/*.jpg
-src/modules/Sudoku/NN/Dataset/*.jpg
-src/modules/Sudoku/NN/Train
-
-#   NN
-# src/modules/Sudoku/CNN.json
-# src/modules/Sudoku/CNN.bin
