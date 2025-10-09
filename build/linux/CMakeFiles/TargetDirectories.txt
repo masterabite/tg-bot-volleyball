@@ -1,0 +1,3 @@
+/home/masterabite/projects/tg-bot-volleyball/build/linux/CMakeFiles/volleyballBot.dir
+/home/masterabite/projects/tg-bot-volleyball/build/linux/CMakeFiles/edit_cache.dir
+/home/masterabite/projects/tg-bot-volleyball/build/linux/CMakeFiles/rebuild_cache.dir
