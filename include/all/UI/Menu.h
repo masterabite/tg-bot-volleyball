@@ -29,7 +29,7 @@ public:
 
     void create_button(std::string buttonLabel);
     void create_button(std::string buttonLabel, void (*proc)(TgBot::Message::Ptr message, User* user, std::string cmd));
-    void create_button_link(std::string buttonName, Menu* menuNext);
+    Button* create_button_link(std::string buttonName, Menu* menuNext);
 
 
     Menu*       get_menu    (std::string menuName);

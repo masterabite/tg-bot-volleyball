@@ -1,0 +1,25 @@
+{
+    "data": [
+        {
+            "ID": -1,
+            "list": [],
+            "place": "Бабушкина 119",
+            "places": 12,
+            "timeEnd": 0,
+            "timeStart": 0,
+            "type": "Игры"
+        },
+        {
+            "ID": 10,
+            "list": [
+                "masterabite"
+            ],
+            "place": "Бабушкина 119",
+            "places": 12,
+            "timeEnd": 1760202000,
+            "timeStart": 1760200800,
+            "type": "Игры"
+        }
+    ],
+    "eventID": 10
+}

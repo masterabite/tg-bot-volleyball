@@ -7,12 +7,14 @@
 
 #include <tgbot/tgbot.h>
 
+#include <json.hpp>
 #include <modules.h>
 
 #include <UI.h>
 
 class User;
 class Menu;
+class Events;
 
 class MASBot
 {
@@ -27,13 +29,15 @@ public:
 	std::string 		get_random_phrase();
 	DayOf* 				get_dayOf();
 	Predictor* 			get_predictor();
+	Events*				get_events();
+	nlohmann::json		get_default_user_data();
 
 	TgBot::Bot*			get_tgBot();
 	time_t&				get_start_time();
 
 
-	void 		save_users();
-	void 		load_users();
+	void 		save_db();
+	void 		load_db();
 
 
 private:
@@ -48,6 +52,7 @@ private:
 	
 	std::unordered_map<std::string, Menu*> 	menus;
 	std::unordered_map<std::string, User*>	users;
+	Events* 								events;
 
 	time_t startTime;
 

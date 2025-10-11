@@ -4,7 +4,7 @@ User::User(Menu* _menu, MASBot* _masBot) {
     chat            = nullptr;
     menuCurrent     = _menu;
     masBot          = _masBot;
-    data            = nlohmann::json();
+    data            = masBot->get_default_user_data();
     lastProcMessageTime     = std::chrono::system_clock::now();
 }
 
@@ -12,7 +12,7 @@ User::User(TgBot::Chat::Ptr _chat, Menu* _menu, MASBot* _masBot) {
     chat            = _chat;
     menuCurrent     = _menu;
     masBot          = _masBot;
-    data            = nlohmann::json();
+    data            = masBot->get_default_user_data();
     lastProcMessageTime     = std::chrono::system_clock::now();
 }
 
@@ -28,8 +28,16 @@ nlohmann::json& User::get_data() {
     return data;    
 }
 
+bool User::is_admin() {
+    return data["type"].get<std::string>() == "admin";
+}
+
 MASBot* User::get_masBot() {    
     return masBot;
+}
+
+std::string User::get_username() {
+    return username;
 }
 
 void User::set_menu(Menu* _menu) {
@@ -56,6 +64,10 @@ TgBot::Message::Ptr User::get_last_sended_menu() {
 
 void User::set_last_sended_menu(TgBot::Message::Ptr _message) {
     lastSendedMessage = _message;
+}
+
+void User::set_username(std::string _username) {
+    username = _username;
 }
 
 std::chrono::time_point<std::chrono::system_clock>  User::get_lastTime() {

@@ -1,5 +1,12 @@
 {
+    "-1": {
+        "nickname": "",
+        "prior": 1,
+        "type": "user"
+    },
     "masterabite": {
-        "nickname": "Артём"
+        "nickname": "",
+        "prior": 0,
+        "type": "admin"
     }
 }

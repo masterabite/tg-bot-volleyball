@@ -27,17 +27,22 @@ public:
     nlohmann::json&     get_data();
     MASBot*             get_masBot();
     TgBot::Message::Ptr get_last_sended_menu();
+    std::string         get_username();
 
     void set_menu(Menu* _menu);
     void set_chat(TgBot::Chat::Ptr _chat);
     void set_data(nlohmann::json _data);
     void set_masBot(MASBot* _masBot);
     void set_last_sended_menu(TgBot::Message::Ptr _message);
+    void set_username(std::string _username);
     
     std::chrono::time_point<std::chrono::system_clock>  get_lastTime();
     void set_lastTime(std::chrono::time_point<std::chrono::system_clock>  tp);
 
+    bool is_admin();
+
 private:
+    std::string             username;
 	TgBot::Chat::Ptr        chat;
     TgBot::Message::Ptr     lastSendedMessage;
     Menu*                   menuCurrent;

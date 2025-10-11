@@ -48,7 +48,7 @@ void Menu::create_button(std::string buttonLabel, void (*proc)(TgBot::Message::P
     button->command = proc;
 }
 
-void Menu::create_button_link(std::string buttonLabel, Menu* menuNext) {
+Button* Menu::create_button_link(std::string buttonLabel, Menu* menuNext) {
 
     Button* button = new Button(buttonLabel, menuNext);
 
@@ -64,6 +64,7 @@ void Menu::create_button_link(std::string buttonLabel, Menu* menuNext) {
         user->set_menu(user->get_menu()->get_button(cmd)->get_menu_next());
         user->get_menu()->send_menu(message, user);
     };
+    return button;
 }
 
 
@@ -96,10 +97,17 @@ void Menu::set_default_functions() {
     };
 
     proc_message = [](TgBot::Message::Ptr message, User* user) {
+
         std::string cmd = user->get_menu()->parse_command(message->text);
-        if (cmd != "") {
+        if (cmd != "" && user->get_menu()->commandParser.check_key(cmd)) {
             user->get_menu()->proc_command(message, user, cmd);
         } 
+
+        if (cmd == "event" && user->is_admin()) {
+            MASBot* masBot = user->get_masBot();
+            masBot->get_events()->reg_event(message->text.substr(cmd.size()));
+        }
+
         user->get_menu()->send_menu(message, user);  
     };
 
@@ -120,10 +128,7 @@ std::string Menu::parse_command(const std::string& text) {
         command += text[pos];
     }
     to_lower(command);
-    if (commandParser.check_key(command)) {
-        return command;
-    }
-    return "";
+    return command;
 }
 
 void Menu::to_lower(std::string& message) {
