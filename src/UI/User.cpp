@@ -2,7 +2,6 @@
 #include<tools/JsonProc.h>
 
 User::User(MASBot* _masBot, std::string _username, nlohmann::json _data) {
-    chat            = nullptr;
     menuCurrent     = nullptr;
     masBot          = _masBot;
     data            = masBot->get_default_user_data();
@@ -24,6 +23,10 @@ User::User(MASBot* _masBot, std::string _username, nlohmann::json _data) {
 
 Menu* User::get_menu() {
     return menuCurrent;
+}
+
+int64_t User::get_chat_id() {
+    return data["chatId"].get<int64_t>();
 }
 
 nlohmann::json& User::get_data() {

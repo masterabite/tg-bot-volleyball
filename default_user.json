@@ -2,5 +2,6 @@
         "menu": "main",
         "nickname": "",
         "prior": 1,
-        "type": "user"
+        "type": "user",
+        "chatId": 0
 }

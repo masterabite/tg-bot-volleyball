@@ -150,6 +150,7 @@ MASBot::MASBot(std::string token): tgBot(token) {
         if (!masBot) return;
         Events* events = masBot->get_events();
         std::vector<json>& eventsList = events->get_data();
+        json& event = eventsList.back();
         std::string persText = "";
         // persText += events->to_string() + "\n";
 
@@ -158,6 +159,24 @@ MASBot::MASBot(std::string token): tgBot(token) {
             persText += "Вы не записаны на событие!";
         } else {
             events->remove_user(user->get_username());
+            
+            // отправляем юзеру хорошие новости
+            if (event["places"] <= event["list"].size()) {
+                printf("1\n");
+                std::string nextUsername = event["list"][event["places"].get<int>()-1].get<std::string>();
+                printf("1\n");
+                User* nextUser = masBot->get_user(nextUsername);
+                printf("2\n");
+                std::string nextUserMessage = "Кто-то отписался от события, теперь ты в основе!";
+                printf("3\n");
+                TgBot::Message::Ptr nextUserMessagePtr = user->get_masBot()->get_tgBot()->getApi().sendMessage(nextUser->get_chat_id(), nextUserMessage);
+                printf("4\n");
+                nextUser->set_menu(masBot->get_menu("event"));
+                printf("5\n");
+                nextUser->get_menu()->send_menu(nextUserMessagePtr, nextUser);
+                printf("6\n");
+            }
+
             persText += "Вы успешно отписались от события!";
         }
 
@@ -214,6 +233,7 @@ MASBot::MASBot(std::string token): tgBot(token) {
         }
         
         User* user = masBot->get_user(message->chat->username);
+        user->get_data()["chatId"] = message->chat->id;
         std::chrono::duration<double> diff = std::chrono::system_clock::now() - user->get_lastTime();
 
         if (diff.count() < 0.4) {

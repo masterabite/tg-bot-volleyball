@@ -26,6 +26,7 @@ public:
     MASBot*             get_masBot();
     TgBot::Message::Ptr get_last_sended_menu();
     std::string         get_username();
+    int64_t             get_chat_id();
 
     void set_menu(Menu* _menu);
     void set_data(nlohmann::json _data);
@@ -40,7 +41,7 @@ public:
 
 private:
     std::string             username;
-	TgBot::Chat::Ptr        chat;
+	int64_t                 chatId;
     TgBot::Message::Ptr     lastSendedMessage;
     Menu*                   menuCurrent;
     nlohmann::json          data;
