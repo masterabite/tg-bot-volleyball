@@ -1,12 +1,14 @@
 {
-    "-1": {
-        "nickname": "",
-        "prior": 1,
-        "type": "user"
-    },
     "masterabite": {
+        "menu": "event",
         "nickname": "",
         "prior": 0,
         "type": "admin"
+    },
+    "zhenin_shen": {
+        "menu": "event",
+        "nickname": "",
+        "prior": 1,
+        "type": "user"
     }
 }

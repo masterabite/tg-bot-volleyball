@@ -1,27 +1,29 @@
 #include <UI.h>
+#include<tools/JsonProc.h>
 
-User::User(Menu* _menu, MASBot* _masBot) {
+User::User(MASBot* _masBot, std::string _username, nlohmann::json _data) {
     chat            = nullptr;
-    menuCurrent     = _menu;
+    menuCurrent     = nullptr;
     masBot          = _masBot;
     data            = masBot->get_default_user_data();
-    lastProcMessageTime     = std::chrono::system_clock::now();
+    username        = _username;
+    lastProcMessageTime     = std::chrono::system_clock::from_time_t(1);
+
+    JsonProc::replace(data, _data);
+
+    menuCurrent = _masBot->get_menu(data["menu"].get<std::string>());
 }
 
-User::User(TgBot::Chat::Ptr _chat, Menu* _menu, MASBot* _masBot) {
-    chat            = _chat;
-    menuCurrent     = _menu;
-    masBot          = _masBot;
-    data            = masBot->get_default_user_data();
-    lastProcMessageTime     = std::chrono::system_clock::now();
-}
+// User::User(TgBot::Chat::Ptr _chat, Menu* _menu, MASBot* _masBot) {
+//     chat            = _chat;
+//     menuCurrent     = _menu;
+//     masBot          = _masBot;
+//     data            = masBot->get_default_user_data();
+//     lastProcMessageTime     = std::chrono::system_clock::now();
+// }
 
 Menu* User::get_menu() {
     return menuCurrent;
-}
-
-TgBot::Chat::Ptr User::get_chat() {
-    return chat;
 }
 
 nlohmann::json& User::get_data() {
@@ -42,10 +44,7 @@ std::string User::get_username() {
 
 void User::set_menu(Menu* _menu) {
     menuCurrent = _menu;
-}
-
-void User::set_chat(TgBot::Chat::Ptr _chat) {
-    chat = _chat;
+    data["menu"] = menuCurrent->get_name();
 }
 
 void User::set_data(nlohmann::json _data) {

@@ -113,7 +113,7 @@ void Menu::set_default_functions() {
 
     if (menus["parent"] != nullptr) {
         // создаем кнопку "назад"
-        create_button_link("назад", menus["parent"]); 
+        create_button_link("Назад 🔙", menus["parent"]); 
     }
 }
 

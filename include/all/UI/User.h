@@ -19,18 +19,15 @@ class MASBot;
 class User
 {
 public:
-	User(Menu* _menu, MASBot* _masBot);
-	User(TgBot::Chat::Ptr _chat, Menu* _menu, MASBot* _masBot);
+	User(MASBot* _masBot, std::string _username, nlohmann::json _data);
 
     Menu*               get_menu();
-    TgBot::Chat::Ptr    get_chat();
     nlohmann::json&     get_data();
     MASBot*             get_masBot();
     TgBot::Message::Ptr get_last_sended_menu();
     std::string         get_username();
 
     void set_menu(Menu* _menu);
-    void set_chat(TgBot::Chat::Ptr _chat);
     void set_data(nlohmann::json _data);
     void set_masBot(MASBot* _masBot);
     void set_last_sended_menu(TgBot::Message::Ptr _message);

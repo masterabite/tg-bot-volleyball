@@ -14,6 +14,9 @@
 MASBot* masBot;
 
 MASBot::MASBot(std::string token): tgBot(token) {
+
+    defaultUser = JsonProc::scan("default_user.json");
+
     srand(time(NULL));
     startTime = time(0) + 1;
 
@@ -116,7 +119,7 @@ MASBot::MASBot(std::string token): tgBot(token) {
         );
     };
 
-    Button* subButton = menuMainEvent->create_button_link("записаться", menuMainEventReg);
+    Button* subButton = menuMainEvent->create_button_link("Записаться ✅", menuMainEventReg);
     subButton->command = [](TgBot::Message::Ptr message, User* user, std::string cmd) {
 
         MASBot* masBot = user->get_masBot();
@@ -132,13 +135,15 @@ MASBot::MASBot(std::string token): tgBot(token) {
         } else {
             events->add_user(user->get_username());
             persText += "Вы успешно записались на событие!";
-            user->get_menu()->send_menu(message, user);
         }
 
         // user->get_masBot()->get_tgBot()->getApi().sendMessage(message->chat->id, persText, 0, 0);
+        if (pos == -1) {
+            user->get_menu()->send_menu(message, user);
+        }
     };
     
-    Button* unsubButton = menuMainEvent->create_button_link("отписаться", menuMainEventUnreg);
+    Button* unsubButton = menuMainEvent->create_button_link("Отписаться ❌", menuMainEventUnreg);
     unsubButton->command = [](TgBot::Message::Ptr message, User* user, std::string cmd) {
 
         MASBot* masBot = user->get_masBot();
@@ -154,38 +159,40 @@ MASBot::MASBot(std::string token): tgBot(token) {
         } else {
             events->remove_user(user->get_username());
             persText += "Вы успешно отписались от события!";
-            user->get_menu()->send_menu(message, user);
         }
 
         // user->get_masBot()->get_tgBot()->getApi().sendMessage(message->chat->id, persText, 0, 0);
+        if (pos != -1) {
+            user->get_menu()->send_menu(message, user);
+        } 
     };
 
-    // Button* listButton = menuMainEvent->create_button_link("Список", menuMainEventList);
-    // listButton->command = [](TgBot::Message::Ptr message, User* user, std::string cmd) {
+    Button* listButton = menuMainEvent->create_button_link("Обновить 🔃", menuMainEventList);
+    listButton->command = [](TgBot::Message::Ptr message, User* user, std::string cmd) {
+        user->get_menu()->send_menu(message, user);
+        // MASBot* masBot = user->get_masBot();
+        // if (!masBot) return;
+        // Events* events = masBot->get_events();
+        // std::vector<json>& eventsList = events->get_data();
+        // std::vector<json> userList = eventsList.back()["list"].get<std::vector<json>>();
 
-    //     MASBot* masBot = user->get_masBot();
-    //     if (!masBot) return;
-    //     Events* events = masBot->get_events();
-    //     std::vector<json>& eventsList = events->get_data();
-    //     std::vector<json> userList = eventsList.back()["list"].get<std::vector<json>>();
+        // std::string persText = "";
+        // int places = events->get_data().back()["places"].get<int>();
+        // for (int i = 0; i < std::max(userList.size(), size_t(places)); ++i) {
+        //     persText += "\n" + std::to_string(i+1) + ". ";
+        //     if (i < userList.size()) {
+        //         persText += "@" + userList[i].get<std::string>();
 
-    //     std::string persText = "";
-    //     int places = events->get_data().back()["places"].get<int>();
-    //     for (int i = 0; i < std::max(userList.size(), size_t(places)); ++i) {
-    //         persText += "\n" + std::to_string(i+1) + ". ";
-    //         if (i < userList.size()) {
-    //             persText += "@" + userList[i].get<std::string>();
-
-    //             if (user->get_username() == userList[i].get<std::string>().c_str()) {
-    //                 persText += " <- это вы";
-    //             }
-    //         }
-    //         if (i+1 == places) {
-    //             persText += "\n-----------------------";
-    //         }
-    //     }
-    //     user->get_masBot()->get_tgBot()->getApi().sendMessage(message->chat->id, persText, 0, 0);
-    // };
+        //         if (user->get_username() == userList[i].get<std::string>().c_str()) {
+        //             persText += " <- это вы";
+        //         }
+        //     }
+        //     if (i+1 == places) {
+        //         persText += "\n-----------------------";
+        //     }
+        // }
+        // user->get_masBot()->get_tgBot()->getApi().sendMessage(message->chat->id, persText, 0, 0);
+    };
 
 
 
@@ -296,8 +303,7 @@ User* MASBot::get_user(const std::string& username) {
     printf("get user \"%s\"\n", username.c_str());
     if (users.find(username) == users.end()) {
         printf("new user \"%s\"\n", username.c_str());
-        users[username] = new User(menus["main"], this);
-        users[username]->set_lastTime(std::chrono::system_clock::from_time_t(10));
+        users[username] = new User(this, username, {});
     }
     printf("%p\n", users[username]);
     return users[username];
@@ -327,11 +333,7 @@ Events* MASBot::get_events() {
 }
 
 json MASBot::get_default_user_data() {
-    if (!users.count("-1")) {
-        printf("WAR\t no default user [\"-1\"]\n");
-        return {};
-    }
-    return users["-1"]->get_data();
+    return defaultUser;
 }
 
 TgBot::Bot* MASBot::get_tgBot() {
@@ -341,16 +343,10 @@ TgBot::Bot* MASBot::get_tgBot() {
 void MASBot::load_db() {
     nlohmann::json usersJson = JsonProc::scan("users.json");
     for (auto& [username, data]: usersJson.items()) {
-        if (users.count(username)) {
-            printf("updating user \"%s\"\n", username.c_str());
-            User* user = users[username];
-            user->set_data(data);
-            user->set_username(username);
-        } else {
+        User* user;
+        if (!users.count(username)) {
             printf("adding user \"%s\"\n", username.c_str());
-            users[username] = new User(menus["main"], this);
-            users[username]->set_data(data);
-            users[username]->set_username(username);
+            users[username] = new User(this, username, data);
             printf("user \"%s\" added data:\n%s\n", username.c_str(), users[username]->get_data().dump(4).c_str());
         }
     }

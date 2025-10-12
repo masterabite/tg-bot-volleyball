@@ -53,6 +53,7 @@ private:
 	std::unordered_map<std::string, Menu*> 	menus;
 	std::unordered_map<std::string, User*>	users;
 	Events* 								events;
+	nlohmann::json							defaultUser;
 
 	time_t startTime;
 

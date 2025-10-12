@@ -46,8 +46,9 @@ void Events::reg_event(std::string parseString) {
 
 std::string Events::to_string() {
     std::string ret = "";
-    for (int i = 1; i < data.size(); ++i) {
+    for (int i = 0; i < data.size(); ++i) {
         json& event = data[i];
+        if (event["timeStart"].get<int>() < time(0)) continue;
         ret += "\n";
         ret += "_____🏐" + event["type"].get<std::string>() + "🏐_____";
         ret += "\n 🏢 " + event["place"].get<std::string>();
