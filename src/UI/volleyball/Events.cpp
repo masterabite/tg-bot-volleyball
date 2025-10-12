@@ -50,12 +50,24 @@ std::string Events::to_string() {
         json& event = data[i];
         if (event["timeStart"].get<int>() < time(0)) continue;
         ret += "\n";
-        ret += "_____🏐" + event["type"].get<std::string>() + "🏐_____";
+        ret += "_________🏐" + event["type"].get<std::string>() + "🏐_________";
         ret += "\n 🏢 " + event["place"].get<std::string>();
         ret += "\n 🕜 "    + Dater::get_date_time_duration_string(event["timeStart"].get<int>(), event["timeEnd"].get<int>()); 
-        ret += "\n 📃 Записей: "   + std::to_string(event["list"].size()) + "/" + std::to_string(event["places"].get<int>());
-        ret += std::to_string(event["list"].size()) < std::to_string(event["places"].get<int>())? "✅": "❗";
-        ret += "\n____________________";
+
+        //  Записи
+        int places = event["places"].get<int>();
+        int regs = event["list"].size();
+
+        ret += "\n 📃 Места: "   + std::to_string(regs) + "/" + std::to_string(places);
+        std::string emoji;
+        float workload = 1.f*regs/places;
+        if (workload < 0.3f)    emoji = " [⚪ Почти никого]"; else 
+        if (workload < 0.6f)    emoji = " [🟢 Мало людей]"; else      
+        if (workload < 0.8f)    emoji = " [⏳ Места заканчиваются]"; else   
+        if (workload < 1.1f)    emoji = " [🔥 Людей хватает]"; else
+                                emoji = " [💀 Перегруз]";
+        ret += emoji;
+        ret += "\n_____________________________";
     }
     return ret;
 }

@@ -20,7 +20,7 @@ int main() {
     #if BUILD_MODE < 2     
     botToken = "7298813441:AAERfbqWxHg7IYLEDn-PAlQjHVyv7gCoUDA";
     #else
-    botToken = "6600829958:AAGoFFj1EmI6WiYjpXloM-7PSrNezSyO6VQ";
+    botToken = "8270523151:AAHjjY2oMAI2l22QuR12gKRvBp0ISK_CAUE";
     #endif
     
     MASBot masBot(botToken);

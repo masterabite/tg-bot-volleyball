@@ -93,7 +93,7 @@ MASBot::MASBot(std::string token): tgBot(token) {
         } else {
             persText += "[Вы записаны, ваш номер " + std::to_string(pos+1) + "]";
             if (pos+1 > eventsList.back()["places"].get<int>()) {
-                persText += "\n❕Вы находитесь в резерве❕";
+                persText += "\n⚠Вы находитесь в резерве⚠";
             }
         }
         persText += "\n";

@@ -10,28 +10,16 @@
             "type": "Игры"
         },
         {
-            "ID": 10,
+            "ID": 12,
             "list": [
                 "masterabite"
             ],
             "place": "Бабушкина 119",
             "places": 12,
-            "timeEnd": 1760202000,
-            "timeStart": 1760200800,
-            "type": "Игры"
-        },
-        {
-            "ID": 11,
-            "list": [
-                "masterabite",
-                "zhenin_shen"
-            ],
-            "place": "Бабушкина 119",
-            "places": 1,
-            "timeEnd": 1760292000,
-            "timeStart": 1760284800,
+            "timeEnd": 1760896800,
+            "timeStart": 1760889600,
             "type": "Игры"
         }
     ],
-    "eventID": 11
+    "eventID": 12
 }
