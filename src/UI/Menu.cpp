@@ -107,6 +107,10 @@ void Menu::set_default_functions() {
             MASBot* masBot = user->get_masBot();
             masBot->get_events()->reg_event(message->text.substr(cmd.size()));
         }
+        if (cmd == "drop" && user->is_admin()) {
+            MASBot* masBot = user->get_masBot();
+            masBot->get_events()->drop(message->text.substr(cmd.size()));
+        } 
 
         user->get_menu()->send_menu(message, user);  
     };

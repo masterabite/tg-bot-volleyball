@@ -10,8 +10,9 @@
             "type": "Игры"
         },
         {
-            "ID": 12,
+            "ID": 19,
             "list": [
+                "zhenin_shen",
                 "masterabite"
             ],
             "place": "Бабушкина 119",
@@ -21,5 +22,5 @@
             "type": "Игры"
         }
     ],
-    "eventID": 12
+    "eventID": 19
 }

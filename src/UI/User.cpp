@@ -25,7 +25,7 @@ Menu* User::get_menu() {
     return menuCurrent;
 }
 
-int64_t User::get_chat_id() {
+int64_t User::get_chat_id() const {
     return data["chatId"].get<int64_t>();
 }
 

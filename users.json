@@ -5,5 +5,12 @@
         "nickname": "",
         "prior": 1,
         "type": "admin"
+    },
+    "zhenin_shen": {
+        "chatId": 631861552,
+        "menu": "event",
+        "nickname": "",
+        "prior": 1,
+        "type": "user"
     }
 }

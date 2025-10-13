@@ -360,6 +360,10 @@ TgBot::Bot* MASBot::get_tgBot() {
     return &tgBot;
 }
 
+const std::unordered_map<std::string, User*>&	MASBot::get_users() {
+    return users;
+}
+
 void MASBot::load_db() {
     nlohmann::json usersJson = JsonProc::scan("users.json");
     for (auto& [username, data]: usersJson.items()) {

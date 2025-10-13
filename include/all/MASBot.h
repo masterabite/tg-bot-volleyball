@@ -31,10 +31,10 @@ public:
 	Predictor* 			get_predictor();
 	Events*				get_events();
 	nlohmann::json		get_default_user_data();
-
 	TgBot::Bot*			get_tgBot();
 	time_t&				get_start_time();
 
+	const std::unordered_map<std::string, User*>&	get_users();
 
 	void 		save_db();
 	void 		load_db();

@@ -25,6 +25,7 @@ public:
 
     std::vector<nlohmann::json>& get_data() {return data;}
     void reg_event(std::string parse);
+    void drop(std::string message);
     std::string to_string();
 
     int find_user(std::string username);

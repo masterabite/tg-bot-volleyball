@@ -42,6 +42,29 @@ void Events::reg_event(std::string parseString) {
         printf("\t json::parse(...): %s\n", e.what());
     }
     save();
+
+    std::string totalMessage = "Появилось новое событие!";
+    json& event = data.back();
+    
+    if (event["timeStart"] < time(0)) return;
+
+    std::vector<json> eventList = event["list"];
+    for (const auto& [username, user]: masBot->get_users()) { 
+        TgBot::Message::Ptr userMessage = masBot->get_tgBot()->getApi().sendMessage(user->get_chat_id(), totalMessage);
+        user->get_menu()->send_menu(userMessage, user);
+    }
+}
+
+void Events::drop(std::string message) {
+    std::string totalMessage = "Произошла отмена события, причина:"+message;
+    json& event = data.back();
+    std::vector<json> eventList = event["list"];
+    for (int i = 0; i < eventList.size(); ++i) { 
+        User* user = masBot->get_user(eventList[i].get<std::string>());
+        TgBot::Message::Ptr userMessage = masBot->get_tgBot()->getApi().sendMessage(user->get_chat_id(), totalMessage);
+        user->get_menu()->send_menu(userMessage, user);
+    }
+    data.pop_back();
 }
 
 std::string Events::to_string() {
@@ -82,6 +105,7 @@ int Events::find_user(std::string username) {
 } 
 
 int Events::add_user(std::string username) {
+    if (data.size() <= 1) return -1;
     data.back()["list"].push_back(username);
     save();
     return -1+data.back()["list"].size();
