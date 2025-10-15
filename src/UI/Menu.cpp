@@ -82,6 +82,7 @@ void Menu::set_default_functions() {
             user->get_masBot()->get_tgBot()->getApi().deleteMessage(lastMenu->chat->id, lastMenu->messageId);
         }
 
+        user->set_chat(message->chat);
         user->set_last_sended_menu(
             user->get_masBot()->get_tgBot()->getApi().sendMessage(message->chat->id, user->get_menu()->get_text(), 0, 0, keyboard)
         );

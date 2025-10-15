@@ -32,6 +32,7 @@ public:
     void set_data(nlohmann::json _data);
     void set_masBot(MASBot* _masBot);
     void set_last_sended_menu(TgBot::Message::Ptr _message);
+    void set_chat(TgBot::Chat::Ptr _chat);
     void set_username(std::string _username);
     
     std::chrono::time_point<std::chrono::system_clock>  get_lastTime();
@@ -43,6 +44,7 @@ private:
     std::string             username;
 	int64_t                 chatId;
     TgBot::Message::Ptr     lastSendedMessage;
+    TgBot::Chat::Ptr        chat;
     Menu*                   menuCurrent;
     nlohmann::json          data;
     MASBot*                 masBot;

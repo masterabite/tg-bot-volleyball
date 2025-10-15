@@ -68,6 +68,10 @@ void User::set_last_sended_menu(TgBot::Message::Ptr _message) {
     lastSendedMessage = _message;
 }
 
+void User::set_chat(TgBot::Chat::Ptr _chat) {
+    chat = _chat;
+}
+
 void User::set_username(std::string _username) {
     username = _username;
 }

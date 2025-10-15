@@ -44,7 +44,7 @@ MASBot::MASBot(std::string token): tgBot(token) {
     
 
     //  стартовое меню
-    menuMain->set_text("[ бот команды 🚩]\n");
+    menuMain->set_text("[ бот команды ]\n");
 
     //     //  меню установки ника
     // menuMain->  create_button_link("указать имя", menuMainNick);
@@ -58,7 +58,7 @@ MASBot::MASBot(std::string token): tgBot(token) {
     //     user->get_menu()->send_menu(message, user);
     // };
 
-
+    
         //  Ближайшая тренировка
     menuMain->          create_button_link("Ближайшее событие", menuMainEvent);
     menuMainEvent->send_menu = [](TgBot::Message::Ptr message, User* user) {
@@ -70,7 +70,6 @@ MASBot::MASBot(std::string token): tgBot(token) {
         if (lastMenu != nullptr) {
             user->get_masBot()->get_tgBot()->getApi().deleteMessage(lastMenu->chat->id, lastMenu->messageId);
         }
-
         MASBot* masBot = user->get_masBot();
         if (!masBot) return;
         Events* events = masBot->get_events();
