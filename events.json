@@ -8,20 +8,6 @@
             "timeEnd": 0,
             "timeStart": 0,
             "type": "Игры"
-        },
-        {
-            "ID": 19,
-            "list": [
-                "masterabite",
-                "",
-                "wayelysium",
-                "mir_moi868"
-            ],
-            "place": "Бабушкина 119",
-            "places": 12,
-            "timeEnd": 1760896800,
-            "timeStart": 1760889600,
-            "type": "Игры"
         }
     ],
     "eventID": 19

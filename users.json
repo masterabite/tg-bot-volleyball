@@ -6,12 +6,33 @@
         "prior": 1,
         "type": "user"
     },
+    "Eber2line": {
+        "chatId": 438865269,
+        "menu": "main",
+        "nickname": "",
+        "prior": 1,
+        "type": "user"
+    },
+    "aKirushev": {
+        "chatId": 148877630,
+        "menu": "event",
+        "nickname": "",
+        "prior": 1,
+        "type": "user"
+    },
+    "jackycruper": {
+        "chatId": 686657904,
+        "menu": "event",
+        "nickname": "",
+        "prior": 1,
+        "type": "user"
+    },
     "masterabite": {
         "chatId": 679555913,
         "menu": "event",
         "nickname": "",
         "prior": 1,
-        "type": "user"
+        "type": "admin"
     },
     "mir_moi868": {
         "chatId": 876647932,
