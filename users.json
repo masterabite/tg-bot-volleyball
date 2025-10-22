@@ -1,6 +1,7 @@
 {
     "": {
         "chatId": 933507387,
+        "fullname": "Irina ",
         "menu": "event",
         "nickname": "",
         "prior": 1,
@@ -22,6 +23,13 @@
     },
     "jackycruper": {
         "chatId": 686657904,
+        "menu": "event",
+        "nickname": "",
+        "prior": 1,
+        "type": "user"
+    },
+    "lackiich": {
+        "chatId": 388249358,
         "menu": "event",
         "nickname": "",
         "prior": 1,
@@ -61,6 +69,7 @@
     },
     "wayelysium": {
         "chatId": 1998415299,
+        "fullname": "Дмитрий Капустин",
         "menu": "event",
         "nickname": "",
         "prior": 1,

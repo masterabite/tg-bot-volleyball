@@ -86,7 +86,7 @@ MASBot::MASBot(std::string token): tgBot(token) {
         }
         persText += events->to_string() + "\n";
 
-        int pos = events->find_user(user->get_username());
+        int pos = events->find_user(user->get_list_name());
         if (pos == -1) {
             persText += "[Вы не записаны]";
         } else {
@@ -104,7 +104,7 @@ MASBot::MASBot(std::string token): tgBot(token) {
             if (i < userList.size()) {
                 persText += "@" + userList[i].get<std::string>();
 
-                if (user->get_username() == userList[i].get<std::string>().c_str()) {
+                if (i == pos) {
                     persText += " <- это вы";
                 }
             }
