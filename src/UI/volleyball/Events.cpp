@@ -50,8 +50,13 @@ void Events::reg_event(std::string parseString) {
 
     std::vector<json> eventList = event["list"];
     for (const auto& [username, user]: masBot->get_users()) { 
-        TgBot::Message::Ptr userMessage = masBot->get_tgBot()->getApi().sendMessage(user->get_chat_id(), totalMessage);
-        user->get_menu()->send_menu(userMessage, user);
+        try {
+            TgBot::Message::Ptr userMessage = masBot->get_tgBot()->getApi().sendMessage(user->get_chat_id(), totalMessage);
+            user->get_menu()->send_menu(userMessage, user);
+        }
+        catch (const std::exception& e) {
+            printf("ERROR try send message to user \"@%s (%s)\": %s", user->get_username().c_str(), user->get_fullname().c_str(), e.what());
+        }
     }
 }
 
