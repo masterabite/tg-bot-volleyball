@@ -29,6 +29,7 @@
     },
     "masterabite": {
         "chatId": 679555913,
+        "fullname": "Артём Михайлов",
         "menu": "event",
         "nickname": "",
         "prior": 1,
@@ -36,6 +37,7 @@
     },
     "mir_moi868": {
         "chatId": 876647932,
+        "fullname": "Марусь ",
         "menu": "event",
         "nickname": "",
         "prior": 1,
@@ -43,6 +45,7 @@
     },
     "rodionn2": {
         "chatId": 5118959933,
+        "fullname": "Rodion Rodj",
         "menu": "event",
         "nickname": "",
         "prior": 1,
@@ -50,6 +53,7 @@
     },
     "sundevi": {
         "chatId": 249031814,
+        "fullname": "Andrew Voronin",
         "menu": "event",
         "nickname": "",
         "prior": 1,

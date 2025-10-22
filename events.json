@@ -8,7 +8,20 @@
             "timeEnd": 0,
             "timeStart": 0,
             "type": "Игры"
+        },
+        {
+            "ID": 21,
+            "list": [
+                "rodionn2",
+                "masterabite",
+                "mir_moi868"
+            ],
+            "place": "Бабушкина 119",
+            "places": 12,
+            "timeEnd": 1761501600,
+            "timeStart": 1761494400,
+            "type": "Игры"
         }
     ],
-    "eventID": 20
+    "eventID": 21
 }

@@ -54,8 +54,8 @@ void Events::reg_event(std::string parseString) {
             TgBot::Message::Ptr userMessage = masBot->get_tgBot()->getApi().sendMessage(user->get_chat_id(), totalMessage);
             user->get_menu()->send_menu(userMessage, user);
         }
-        catch (const std::exception& e) {
-            printf("ERROR try send message to user \"@%s (%s)\": %s", user->get_username().c_str(), user->get_fullname().c_str(), e.what());
+        catch (TgBot::TgException& e) {
+            printf("ERROR try send reg event to user \"@%s (%s)\": %s", user->get_username().c_str(), user->get_fullname().c_str(), e.what());
         }
     }
 }
@@ -66,8 +66,13 @@ void Events::drop(std::string message) {
     std::vector<json> eventList = event["list"];
     for (int i = 0; i < eventList.size(); ++i) { 
         User* user = masBot->get_user(eventList[i].get<std::string>());
-        TgBot::Message::Ptr userMessage = masBot->get_tgBot()->getApi().sendMessage(user->get_chat_id(), totalMessage);
-        user->get_menu()->send_menu(userMessage, user);
+        try {
+            TgBot::Message::Ptr userMessage = masBot->get_tgBot()->getApi().sendMessage(user->get_chat_id(), totalMessage);
+            user->get_menu()->send_menu(userMessage, user);
+        }
+        catch (TgBot::TgException& e) {
+            printf("ERROR try send drop event to user \"@%s (%s)\": %s", user->get_username().c_str(), user->get_fullname().c_str(), e.what());
+        }
     }
     data.pop_back();
 }
