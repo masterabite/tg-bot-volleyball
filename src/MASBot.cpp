@@ -128,11 +128,11 @@ MASBot::MASBot(std::string token): tgBot(token) {
         std::string persText = "";
         // persText += events->to_string() + "\n";
 
-        int pos = events->find_user(user->get_username());
+        int pos = events->find_user(user->get_list_name());
         if (pos != -1) {
             persText += "Вы уже записаны на событие!";
         } else {
-            events->add_user(user->get_username());
+            events->add_user(user->get_list_name());
             persText += "Вы успешно записались на событие!";
         }
 
@@ -153,11 +153,11 @@ MASBot::MASBot(std::string token): tgBot(token) {
         std::string persText = "";
         // persText += events->to_string() + "\n";
 
-        int pos = events->find_user(user->get_username());
+        int pos = events->find_user(user->get_list_name());
         if (pos == -1) {
             persText += "Вы не записаны на событие!";
         } else {
-            events->remove_user(user->get_username());
+            events->remove_user(user->get_list_name());
             
             // отправляем юзеру хорошие новости
             if (event["places"] <= event["list"].size()) {
@@ -281,7 +281,6 @@ void MASBot::tgBot_start() {
         TgBot::TgLongPoll longPoll(tgBot);
         while (true) {
             longPoll.start();
-            printf("saving users\n");
             save_db();
         }
     }

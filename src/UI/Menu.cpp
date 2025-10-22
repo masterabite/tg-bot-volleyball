@@ -89,7 +89,10 @@ void Menu::set_default_functions() {
     };
     
     proc_command = [](TgBot::Message::Ptr message, User* user, std::string cmd) {
-        
+        if (user->get_fullname().empty()) {
+            user->set_fullname(message->chat->firstName + " " + message->chat->lastName);
+        }
+
         if (user->get_menu()->buttons.count(cmd) && user->get_menu()->buttons[cmd]->command != nullptr) {
             user->get_menu()->buttons[cmd]->command(message, user, cmd);
         } else {

@@ -81,7 +81,7 @@ std::string Events::to_string() {
         int places = event["places"].get<int>();
         int regs = event["list"].size();
 
-        ret += "\n 📃 Места: "   + std::to_string(regs) + "/" + std::to_string(places);
+        ret += "\n 📃 Записалось: "   + std::to_string(regs) + "/" + std::to_string(places);
         std::string emoji;
         float workload = 1.f*regs/places;
         if (workload < 0.3f)    emoji = " [⚪ Почти никого]"; else 

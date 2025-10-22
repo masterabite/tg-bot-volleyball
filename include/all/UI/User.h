@@ -26,6 +26,7 @@ public:
     MASBot*             get_masBot();
     TgBot::Message::Ptr get_last_sended_menu();
     std::string         get_username();
+    std::string         get_list_name();
     int64_t             get_chat_id() const;
 
     void set_menu(Menu* _menu);
@@ -34,14 +35,17 @@ public:
     void set_last_sended_menu(TgBot::Message::Ptr _message);
     void set_chat(TgBot::Chat::Ptr _chat);
     void set_username(std::string _username);
+    void set_fullname(std::string _fullname);
     
     std::chrono::time_point<std::chrono::system_clock>  get_lastTime();
+    std::string get_fullname();
     void set_lastTime(std::chrono::time_point<std::chrono::system_clock>  tp);
 
     bool is_admin();
 
 private:
     std::string             username;
+    std::string             fullname;
 	int64_t                 chatId;
     TgBot::Message::Ptr     lastSendedMessage;
     TgBot::Chat::Ptr        chat;

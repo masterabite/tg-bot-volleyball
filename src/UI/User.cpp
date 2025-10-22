@@ -6,6 +6,7 @@ User::User(MASBot* _masBot, std::string _username, nlohmann::json _data) {
     masBot          = _masBot;
     data            = masBot->get_default_user_data();
     username        = _username;
+    fullname        = (_data.contains("fullname")? _data["fullname"].get<std::string>(): "");
     lastProcMessageTime     = std::chrono::system_clock::from_time_t(1);
 
     JsonProc::replace(data, _data);
@@ -33,6 +34,10 @@ nlohmann::json& User::get_data() {
     return data;    
 }
 
+std::string User::get_fullname() {
+    return fullname;
+}
+
 bool User::is_admin() {
     return data["type"].get<std::string>() == "admin";
 }
@@ -43,6 +48,10 @@ MASBot* User::get_masBot() {
 
 std::string User::get_username() {
     return username;
+}
+
+std::string User::get_list_name() {
+    return username.empty()? fullname: username;
 }
 
 void User::set_menu(Menu* _menu) {
@@ -70,10 +79,16 @@ void User::set_last_sended_menu(TgBot::Message::Ptr _message) {
 
 void User::set_chat(TgBot::Chat::Ptr _chat) {
     chat = _chat;
+    fullname = _chat->firstName + " " + chat->lastName;
 }
 
 void User::set_username(std::string _username) {
     username = _username;
+}
+
+void User::set_fullname(std::string _fullname) {
+    fullname = _fullname;
+    data["fullname"] = fullname;
 }
 
 std::chrono::time_point<std::chrono::system_clock>  User::get_lastTime() {
