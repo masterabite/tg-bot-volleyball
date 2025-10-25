@@ -51,7 +51,7 @@ std::string User::get_username() {
 }
 
 std::string User::get_list_name() {
-    return username.empty()? fullname: username;
+    return listname;
 }
 
 void User::set_menu(Menu* _menu) {

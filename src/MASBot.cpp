@@ -45,19 +45,6 @@ MASBot::MASBot(std::string token): tgBot(token) {
 
     //  стартовое меню
     menuMain->set_text("[ бот команды ]\n");
-
-    //     //  меню установки ника
-    // menuMain->  create_button_link("указать имя", menuMainNick);
-    // menuMainNick->set_text("Как отображать тебя в списках на тренировках?");
-    // menuMainNick-> proc_message = [](TgBot::Message::Ptr message, User* user) {
-    //     user->get_data()["nickname"] = message->text;
-    //     user->set_menu(user->get_masBot()->get_menu("setNick"));
-    //     std::string rem = "Отлично, теперь будет \"" + message->text + "\"";
-    //     masBot->tgBot.getApi().sendMessage(message->chat->id, rem);
-    //     user->set_menu(user->get_masBot()->get_menu("main"));
-    //     user->get_menu()->send_menu(message, user);
-    // };
-
     
         //  Ближайшая тренировка
     menuMain->          create_button_link("Ближайшее событие", menuMainEvent);
@@ -68,7 +55,12 @@ MASBot::MASBot(std::string token): tgBot(token) {
         }
         TgBot::Message::Ptr lastMenu = user->get_last_sended_menu();
         if (lastMenu != nullptr) {
-            user->get_masBot()->get_tgBot()->getApi().deleteMessage(lastMenu->chat->id, lastMenu->messageId);
+            try {
+                user->get_masBot()->get_tgBot()->getApi().deleteMessage(lastMenu->chat->id, lastMenu->messageId);
+            }
+            catch (TgBot::TgException& e) {
+                printf("error delete message to user %s: %s\n", user->get_list_name().c_str(), e.what());
+            }
         }
         MASBot* masBot = user->get_masBot();
         if (!masBot) return;
@@ -86,11 +78,21 @@ MASBot::MASBot(std::string token): tgBot(token) {
         }
         persText += events->to_string() + "\n";
 
-        int pos = events->find_user(user->get_list_name());
+        int pos = events->find_user(user);
+        persText += "Ваш статус: ";
         if (pos == -1) {
-            persText += "[Вы не записаны]";
+            std::string status = events->get_status(user);
+            if (status == "none") {
+                persText += "[👀 зритель]";
+            } else
+            if (status == "refuse") {
+                persText += "[🛑 отказался]";
+            } else 
+            if (status == "wait") {
+                persText += "[🤔 думаю]";
+            } 
         } else {
-            persText += "[Вы записаны, ваш номер " + std::to_string(pos+1) + "]";
+            persText += "[😎 записан #" + std::to_string(pos+1) + "]";
             if (pos+1 > eventsList.back()["places"].get<int>()) {
                 persText += "\n⚠Вы находитесь в резерве⚠";
             }
@@ -102,7 +104,7 @@ MASBot::MASBot(std::string token): tgBot(token) {
         for (int i = 0; i < std::max(userList.size(), size_t(places)); ++i) {
             persText += "\n" + std::to_string(i+1) + ". ";
             if (i < userList.size()) {
-                persText += "@" + userList[i].get<std::string>();
+                persText += userList[i].get<std::string>();
 
                 if (i == pos) {
                     persText += " <- это вы";
@@ -118,6 +120,64 @@ MASBot::MASBot(std::string token): tgBot(token) {
         );
     };
 
+
+    Button* refuseButton = menuMainEvent->create_button_link("Не смогу 🛑", menuMainEventList);
+    refuseButton->command = [](TgBot::Message::Ptr message, User* user, std::string cmd) {
+        Events* events = masBot->get_events();
+        if (events->set_status(user, "refuse")) {
+            user->get_menu()->send_menu(message, user);
+        }
+    };
+
+    Button* waitButton = menuMainEvent->create_button_link("Возможно смогу 🤔", menuMainEventList);
+    waitButton->command = [](TgBot::Message::Ptr message, User* user, std::string cmd) {
+        Events* events = masBot->get_events();
+        if (events->set_status(user, "wait")) {
+            user->get_menu()->send_menu(message, user);
+        }
+    };
+
+    // Button* unsubButton = menuMainEvent->create_button_link("Отписаться ❌", menuMainEventUnreg);
+    // unsubButton->command = [](TgBot::Message::Ptr message, User* user, std::string cmd) {
+
+    //     MASBot* masBot = user->get_masBot();
+    //     if (!masBot) return;
+    //     Events* events = masBot->get_events();
+    //     std::vector<json>& eventsList = events->get_data();
+    //     json& event = eventsList.back();
+    //     std::string persText = "";
+    //     // persText += events->to_string() + "\n";
+
+    //     int pos = events->find_user(user);
+    //     if (pos == -1) {
+    //         persText += "Вы не записаны на событие!";
+    //     } else {
+    //         events->remove_user(user);
+            
+    //         // отправляем юзеру хорошие новости
+    //         if (event["places"] <= event["list"].size()) {
+    //                 std::string nextUsername = event["list"][event["places"].get<int>()-1].get<std::string>();
+    //                 User* nextUser = masBot->get_user(nextUsername);
+    //                 std::string nextUserMessage = "Кто-то отписался от события, теперь ты в основе!";
+    //                 try {   
+    //                     TgBot::Message::Ptr nextUserMessagePtr = user->get_masBot()->get_tgBot()->getApi().sendMessage(nextUser->get_chat_id(), nextUserMessage);
+    //                     nextUser->set_menu(masBot->get_menu("event"));
+    //                     nextUser->get_menu()->send_menu(nextUserMessagePtr, nextUser);
+    //                 }
+    //                 catch (TgBot::TgException& e) {
+    //                     printf("error send message to user %s: %s\n", user->get_list_name().c_str(), e.what());
+    //                 }
+    //         }
+
+    //         persText += "Вы успешно отписались от события!";
+    //     }
+
+    //     // user->get_masBot()->get_tgBot()->getApi().sendMessage(message->chat->id, persText, 0, 0);
+    //     if (pos != -1) {
+    //         user->get_menu()->send_menu(message, user);
+    //     } 
+    // };
+
     Button* subButton = menuMainEvent->create_button_link("Записаться ✅", menuMainEventReg);
     subButton->command = [](TgBot::Message::Ptr message, User* user, std::string cmd) {
 
@@ -128,11 +188,11 @@ MASBot::MASBot(std::string token): tgBot(token) {
         std::string persText = "";
         // persText += events->to_string() + "\n";
 
-        int pos = events->find_user(user->get_list_name());
+        int pos = events->find_user(user);
         if (pos != -1) {
             persText += "Вы уже записаны на событие!";
         } else {
-            events->add_user(user->get_list_name());
+            events->add_user(user);
             persText += "Вы успешно записались на событие!";
         }
 
@@ -142,75 +202,10 @@ MASBot::MASBot(std::string token): tgBot(token) {
         }
     };
     
-    Button* unsubButton = menuMainEvent->create_button_link("Отписаться ❌", menuMainEventUnreg);
-    unsubButton->command = [](TgBot::Message::Ptr message, User* user, std::string cmd) {
-
-        MASBot* masBot = user->get_masBot();
-        if (!masBot) return;
-        Events* events = masBot->get_events();
-        std::vector<json>& eventsList = events->get_data();
-        json& event = eventsList.back();
-        std::string persText = "";
-        // persText += events->to_string() + "\n";
-
-        int pos = events->find_user(user->get_list_name());
-        if (pos == -1) {
-            persText += "Вы не записаны на событие!";
-        } else {
-            events->remove_user(user->get_list_name());
-            
-            // отправляем юзеру хорошие новости
-            if (event["places"] <= event["list"].size()) {
-                try {
-                    std::string nextUsername = event["list"][event["places"].get<int>()-1].get<std::string>();
-                    User* nextUser = masBot->get_user(nextUsername);
-                    std::string nextUserMessage = "Кто-то отписался от события, теперь ты в основе!";
-                    TgBot::Message::Ptr nextUserMessagePtr = user->get_masBot()->get_tgBot()->getApi().sendMessage(nextUser->get_chat_id(), nextUserMessage);
-                    nextUser->set_menu(masBot->get_menu("event"));
-                    nextUser->get_menu()->send_menu(nextUserMessagePtr, nextUser);
-                }
-                catch (TgBot::TgException& e) {
-                    printf("error send message to user %s: %s\n", user->get_list_name().c_str(), e.what());
-                }
-            }
-
-            persText += "Вы успешно отписались от события!";
-        }
-
-        // user->get_masBot()->get_tgBot()->getApi().sendMessage(message->chat->id, persText, 0, 0);
-        if (pos != -1) {
-            user->get_menu()->send_menu(message, user);
-        } 
-    };
-
-    Button* listButton = menuMainEvent->create_button_link("Обновить 🔃", menuMainEventList);
-    listButton->command = [](TgBot::Message::Ptr message, User* user, std::string cmd) {
+    Button* updateButton = menuMainEvent->create_button_link("Обновить 🔃", menuMainEventList);
+    updateButton->command = [](TgBot::Message::Ptr message, User* user, std::string cmd) {
         user->get_menu()->send_menu(message, user);
-        // MASBot* masBot = user->get_masBot();
-        // if (!masBot) return;
-        // Events* events = masBot->get_events();
-        // std::vector<json>& eventsList = events->get_data();
-        // std::vector<json> userList = eventsList.back()["list"].get<std::vector<json>>();
-
-        // std::string persText = "";
-        // int places = events->get_data().back()["places"].get<int>();
-        // for (int i = 0; i < std::max(userList.size(), size_t(places)); ++i) {
-        //     persText += "\n" + std::to_string(i+1) + ". ";
-        //     if (i < userList.size()) {
-        //         persText += "@" + userList[i].get<std::string>();
-
-        //         if (user->get_username() == userList[i].get<std::string>().c_str()) {
-        //             persText += " <- это вы";
-        //         }
-        //     }
-        //     if (i+1 == places) {
-        //         persText += "\n-----------------------";
-        //     }
-        // }
-        // user->get_masBot()->get_tgBot()->getApi().sendMessage(message->chat->id, persText, 0, 0);
     };
-
-
 
 
 
@@ -218,7 +213,7 @@ MASBot::MASBot(std::string token): tgBot(token) {
     //  __Логика тг бота__
     load_db();
     tgBot.getEvents().onAnyMessage([](TgBot::Message::Ptr message) {
-        
+
         if (masBot == nullptr) {
             printf("masBot is NULL\n");
             return;
@@ -242,7 +237,7 @@ MASBot::MASBot(std::string token): tgBot(token) {
     });
 
     tgBot.getEvents().onCallbackQuery([](TgBot::CallbackQuery::Ptr query) {
-        
+
         if (masBot == nullptr) {
             printf("masBot is NULL\n");
             return;
@@ -253,7 +248,7 @@ MASBot::MASBot(std::string token): tgBot(token) {
             return;
         }
         
-                User* user = masBot->get_user(query->message->chat->username);
+        User* user = masBot->get_user(query->message->chat->username);
         std::chrono::duration<double> diff = std::chrono::system_clock::now() - user->get_lastTime();
 
         if (diff.count() < 0.4) {

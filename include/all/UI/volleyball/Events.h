@@ -28,16 +28,18 @@ public:
     void drop(std::string message);
     std::string to_string();
 
-    int find_user(std::string username);
-    int add_user(std::string username);
-    void remove_user(std::string username);
+    int find_user(User* user);
+    int add_user(User* user);
+    void remove_user(User* user);
+    bool set_status(User* user, std::string status);
+    std::string get_status(User* user);
 
 private:
-    int                             eventID;
-    nlohmann::json                  defaultEvent;
-    std::vector<nlohmann::json>     data;
-    MASBot*                         masBot;
-    std::string                     path;
+    int                                     eventID;
+    nlohmann::json                          defaultEvent;
+    std::vector<nlohmann::json>             data;
+    MASBot*                                 masBot;
+    std::string                             path;
 };
 
 

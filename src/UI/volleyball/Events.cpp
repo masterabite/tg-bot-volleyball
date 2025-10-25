@@ -55,7 +55,7 @@ void Events::reg_event(std::string parseString) {
             user->get_menu()->send_menu(userMessage, user);
         }
         catch (TgBot::TgException& e) {
-            printf("ERROR try send reg event to user \"@%s (%s)\": %s", user->get_username().c_str(), user->get_fullname().c_str(), e.what());
+            printf("ERROR try send reg event to user \"%s (%s)\": %s", user->get_list_name().c_str(), user->get_fullname().c_str(), e.what());
         }
     }
 }
@@ -71,7 +71,7 @@ void Events::drop(std::string message) {
             user->get_menu()->send_menu(userMessage, user);
         }
         catch (TgBot::TgException& e) {
-            printf("ERROR try send drop event to user \"@%s (%s)\": %s", user->get_username().c_str(), user->get_fullname().c_str(), e.what());
+            printf("ERROR try send drop event to user \"%s (%s)\": %s", user->get_list_name().c_str(), user->get_fullname().c_str(), e.what());
         }
     }
     data.pop_back();
@@ -91,7 +91,7 @@ std::string Events::to_string() {
         int places = event["places"].get<int>();
         int regs = event["list"].size();
 
-        ret += "\n 📃 Записалось: "   + std::to_string(regs) + "/" + std::to_string(places);
+        ret += "\n 📃 Записалось: "   + std::to_string(regs) + "/" + std::to_string(places) + "\n";
         std::string emoji;
         float workload = 1.f*regs/places;
         if (workload < 0.3f)    emoji = " [⚪ Почти никого]"; else 
@@ -105,25 +105,64 @@ std::string Events::to_string() {
     return ret;
 }
 
-int Events::find_user(std::string username) {
+int Events::find_user(User* user) {
+    std::string listName = user->get_list_name();
+
     for (int i = 0; i < data.back()["list"].size(); ++i) {
-        if (data.back()["list"][i].get<std::string>() == username) {
+        if (data.back()["list"][i].get<std::string>() == listName) {
             return i;
         }
     }
     return -1;
 } 
 
-int Events::add_user(std::string username) {
+int Events::add_user(User* user) {
     if (data.size() <= 1) return -1;
-    data.back()["list"].push_back(username);
+    std::string listName = user->get_list_name();
+    data.back()["list"].push_back(listName);
+    data.back()["stats"]["wait"].erase(listName);
+    data.back()["stats"]["refuse"].erase(listName);
     save();
     return -1+data.back()["list"].size();
 }
 
-void Events::remove_user(std::string username) {
-    int pos = find_user(username);
+void Events::remove_user(User* user) {
+    int pos = find_user(user);
     if (pos == -1) return;
     data.back()["list"].erase(pos);
     save();
+}
+
+bool Events::set_status(User* user, std::string status) {
+    if (data.size() <= 1) return false;
+
+    std::string currentStatus = get_status(user);
+    json& event = data.back();
+
+    if (status == currentStatus) return false;
+
+    std::string listName = user->get_list_name();
+    if (currentStatus == "accept")  remove_user(user);
+    if (currentStatus == "wait")    event["stats"]["wait"].erase(listName);
+    if (currentStatus == "refuse")  event["stats"]["refuse"].erase(listName);
+    event["stats"][status][listName];
+    return true;
+}
+
+std::string Events::get_status(User* user) {
+    
+    if (find_user(user) >= 0) return "accept";
+    
+    std::string status = "none";
+    json& event = data.back();
+    if (!event.contains("stats")) {
+        printf("эвент не содержит \"stats\"!\n");
+        return status;
+    }
+    std::string listName = user->get_list_name();
+    json& stats = event["stats"];
+    for (const auto& [st, names]: event["stats"].items()) {
+        if (names.contains(listName)) return st;
+    }
+    return status;
 }

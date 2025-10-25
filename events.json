@@ -5,6 +5,10 @@
             "list": [],
             "place": "Бабушкина 119",
             "places": 12,
+            "stats": {
+                "refuse": {},
+                "wait": {}
+            },
             "timeEnd": 0,
             "timeStart": 0,
             "type": "Игры"
@@ -23,6 +27,10 @@
             ],
             "place": "Бабушкина 119",
             "places": 12,
+            "stats": {
+                "refuse": {},
+                "wait": {}
+            },
             "timeEnd": 1761501600,
             "timeStart": 1761494400,
             "type": "Игры"
