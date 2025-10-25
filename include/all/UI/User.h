@@ -36,6 +36,8 @@ public:
     void set_chat(TgBot::Chat::Ptr _chat);
     void set_username(std::string _username);
     void set_fullname(std::string _fullname);
+    void set_fullname(TgBot::Chat::Ptr _chat);
+    void set_listname(TgBot::Chat::Ptr _chat);
     
     std::chrono::time_point<std::chrono::system_clock>  get_lastTime();
     std::string get_fullname();
@@ -46,6 +48,7 @@ public:
 private:
     std::string             username;
     std::string             fullname;
+    std::string             listname;
 	int64_t                 chatId;
     TgBot::Message::Ptr     lastSendedMessage;
     TgBot::Chat::Ptr        chat;

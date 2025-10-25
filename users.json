@@ -1,7 +1,6 @@
 {
     "": {
         "chatId": 933507387,
-        "fullname": "Irina ",
         "menu": "event",
         "nickname": "",
         "prior": 1,
@@ -21,6 +20,13 @@
         "prior": 1,
         "type": "user"
     },
+    "deshkill": {
+        "chatId": 715018159,
+        "menu": "event",
+        "nickname": "",
+        "prior": 1,
+        "type": "user"
+    },
     "jackycruper": {
         "chatId": 686657904,
         "menu": "event",
@@ -35,9 +41,15 @@
         "prior": 1,
         "type": "user"
     },
+    "mark_abroze": {
+        "chatId": 1235728993,
+        "menu": "event",
+        "nickname": "",
+        "prior": 1,
+        "type": "user"
+    },
     "masterabite": {
         "chatId": 679555913,
-        "fullname": "Артём Михайлов",
         "menu": "event",
         "nickname": "",
         "prior": 1,
@@ -45,7 +57,6 @@
     },
     "mir_moi868": {
         "chatId": 876647932,
-        "fullname": "Марусь ",
         "menu": "event",
         "nickname": "",
         "prior": 1,
@@ -53,7 +64,6 @@
     },
     "rodionn2": {
         "chatId": 5118959933,
-        "fullname": "Rodion Rodj",
         "menu": "event",
         "nickname": "",
         "prior": 1,
@@ -61,7 +71,6 @@
     },
     "sundevi": {
         "chatId": 249031814,
-        "fullname": "Andrew Voronin",
         "menu": "event",
         "nickname": "",
         "prior": 1,
@@ -69,7 +78,6 @@
     },
     "wayelysium": {
         "chatId": 1998415299,
-        "fullname": "Дмитрий Капустин",
         "menu": "event",
         "nickname": "",
         "prior": 1,

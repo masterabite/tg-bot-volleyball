@@ -161,19 +161,17 @@ MASBot::MASBot(std::string token): tgBot(token) {
             
             // отправляем юзеру хорошие новости
             if (event["places"] <= event["list"].size()) {
-                printf("1\n");
-                std::string nextUsername = event["list"][event["places"].get<int>()-1].get<std::string>();
-                printf("1\n");
-                User* nextUser = masBot->get_user(nextUsername);
-                printf("2\n");
-                std::string nextUserMessage = "Кто-то отписался от события, теперь ты в основе!";
-                printf("3\n");
-                TgBot::Message::Ptr nextUserMessagePtr = user->get_masBot()->get_tgBot()->getApi().sendMessage(nextUser->get_chat_id(), nextUserMessage);
-                printf("4\n");
-                nextUser->set_menu(masBot->get_menu("event"));
-                printf("5\n");
-                nextUser->get_menu()->send_menu(nextUserMessagePtr, nextUser);
-                printf("6\n");
+                try {
+                    std::string nextUsername = event["list"][event["places"].get<int>()-1].get<std::string>();
+                    User* nextUser = masBot->get_user(nextUsername);
+                    std::string nextUserMessage = "Кто-то отписался от события, теперь ты в основе!";
+                    TgBot::Message::Ptr nextUserMessagePtr = user->get_masBot()->get_tgBot()->getApi().sendMessage(nextUser->get_chat_id(), nextUserMessage);
+                    nextUser->set_menu(masBot->get_menu("event"));
+                    nextUser->get_menu()->send_menu(nextUserMessagePtr, nextUser);
+                }
+                catch (TgBot::TgException& e) {
+                    printf("error send message to user %s: %s\n", user->get_list_name().c_str(), e.what());
+                }
             }
 
             persText += "Вы успешно отписались от события!";

@@ -79,7 +79,19 @@ void User::set_last_sended_menu(TgBot::Message::Ptr _message) {
 
 void User::set_chat(TgBot::Chat::Ptr _chat) {
     chat = _chat;
+    set_fullname(_chat);
+    set_listname(_chat);
+}
+
+void User::set_fullname(TgBot::Chat::Ptr _chat) {
     fullname = _chat->firstName + " " + chat->lastName;
+    data["fullname"] = fullname;
+}
+
+void User::set_listname(TgBot::Chat::Ptr _chat) {
+    listname = _chat->firstName;
+    if (!username.empty()) listname += " @"+username;
+    data["listname"] = listname;
 }
 
 void User::set_username(std::string _username) {

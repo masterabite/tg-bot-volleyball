@@ -79,7 +79,12 @@ void Menu::set_default_functions() {
         }
         TgBot::Message::Ptr lastMenu = user->get_last_sended_menu();
         if (lastMenu != nullptr) {
-            user->get_masBot()->get_tgBot()->getApi().deleteMessage(lastMenu->chat->id, lastMenu->messageId);
+            try {
+                user->get_masBot()->get_tgBot()->getApi().deleteMessage(lastMenu->chat->id, lastMenu->messageId);
+            }
+            catch (TgBot::TgException& e) {
+                printf("delete error for user %s: %s\n", user->get_list_name().c_str(), e.what());
+            }
         }
 
         user->set_chat(message->chat);
@@ -89,8 +94,8 @@ void Menu::set_default_functions() {
     };
     
     proc_command = [](TgBot::Message::Ptr message, User* user, std::string cmd) {
-        if (user->get_fullname().empty()) {
-            user->set_fullname(message->chat->firstName + " " + message->chat->lastName);
+        if (user->get_fullname().empty() || user->get_list_name().empty()) {
+            user->set_chat(message->chat);
         }
 
         if (user->get_menu()->buttons.count(cmd) && user->get_menu()->buttons[cmd]->command != nullptr) {
