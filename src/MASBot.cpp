@@ -113,6 +113,16 @@ MASBot::MASBot(std::string token): tgBot(token) {
             if (i+1 == places) {
                 persText += "\n-----------------------";
             }
+        } persText += "\n";
+
+        if (user->is_admin()) {
+            json& stats = events->get_data().back()["stats"];
+            for (const auto& [st, names]: stats.items()) {
+                persText += st + ":\n";
+                for (const auto& [name, data]: names.items()) {
+                    persText += "- " + name + "\n";
+                }
+            }
         }
 
         user->set_last_sended_menu(

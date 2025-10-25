@@ -28,7 +28,9 @@
             "place": "Бабушкина 119",
             "places": 12,
             "stats": {
-                "refuse": {},
+                "refuse": {
+                    "Артём @masterabite": null
+                },
                 "wait": {}
             },
             "timeEnd": 1761501600,
