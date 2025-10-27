@@ -1,6 +1,7 @@
 {
     "": {
         "chatId": 933507387,
+        "eventId": -1,
         "menu": "event",
         "nickname": "",
         "prior": 1,
@@ -8,6 +9,7 @@
     },
     "aKirushev": {
         "chatId": 148877630,
+        "eventId": -1,
         "menu": "event",
         "nickname": "",
         "prior": 1,
@@ -15,6 +17,7 @@
     },
     "deshkill": {
         "chatId": 715018159,
+        "eventId": -1,
         "menu": "event",
         "nickname": "",
         "prior": 1,
@@ -22,6 +25,7 @@
     },
     "jackycruper": {
         "chatId": 686657904,
+        "eventId": -1,
         "menu": "event",
         "nickname": "",
         "prior": 1,
@@ -29,6 +33,7 @@
     },
     "lackiich": {
         "chatId": 388249358,
+        "eventId": -1,
         "menu": "event",
         "nickname": "",
         "prior": 1,
@@ -36,6 +41,7 @@
     },
     "mark_abroze": {
         "chatId": 1235728993,
+        "eventId": -1,
         "menu": "event",
         "nickname": "",
         "prior": 1,
@@ -43,13 +49,17 @@
     },
     "masterabite": {
         "chatId": 679555913,
-        "menu": "event",
+        "eventId": -1,
+        "fullname": "Артём Михайлов",
+        "listname": "Артём @masterabite",
+        "menu": "main",
         "nickname": "",
         "prior": 1,
         "type": "admin"
     },
     "mir_moi868": {
         "chatId": 876647932,
+        "eventId": -1,
         "menu": "event",
         "nickname": "",
         "prior": 1,
@@ -57,6 +67,7 @@
     },
     "rodionn2": {
         "chatId": 5118959933,
+        "eventId": -1,
         "menu": "event",
         "nickname": "",
         "prior": 1,
@@ -64,6 +75,7 @@
     },
     "sundevi": {
         "chatId": 249031814,
+        "eventId": -1,
         "menu": "event",
         "nickname": "",
         "prior": 1,
@@ -71,6 +83,7 @@
     },
     "wayelysium": {
         "chatId": 1998415299,
+        "eventId": -1,
         "menu": "event",
         "nickname": "",
         "prior": 1,
