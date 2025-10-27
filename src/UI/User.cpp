@@ -54,6 +54,14 @@ std::string User::get_list_name() {
     return listname;
 }
 
+int User::get_event_id() const {
+    return data["eventId"].get<int>();
+}
+
+void User::set_event_id(int id) {
+    data["eventId"] = id;
+}
+
 void User::set_menu(Menu* _menu) {
     menuCurrent = _menu;
     data["menu"] = menuCurrent->get_name();

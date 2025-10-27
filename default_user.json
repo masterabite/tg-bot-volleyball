@@ -3,5 +3,6 @@
         "nickname": "",
         "prior": 1,
         "type": "user",
-        "chatId": 0
+        "chatId": 0,
+        "eventId": -1
 }

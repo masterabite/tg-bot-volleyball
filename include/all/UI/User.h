@@ -28,7 +28,9 @@ public:
     std::string         get_username();
     std::string         get_list_name();
     int64_t             get_chat_id() const;
+    int                 get_event_id() const;
 
+    void set_event_id(int id);
     void set_menu(Menu* _menu);
     void set_data(nlohmann::json _data);
     void set_masBot(MASBot* _masBot);

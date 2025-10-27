@@ -24,7 +24,8 @@ public:
 
 	Menu* 		menu_create(std::string name);
 	Menu* 		menu_create(Menu* parent, std::string name);
-	User* 				get_user(const std::string& username);
+	User* 				get_user_by_username(const std::string& username);
+	User* 				get_user_by_list_name(const std::string& listName);
 	Menu* 				get_menu(std::string name);
 	std::string 		get_random_phrase();
 	DayOf* 				get_dayOf();

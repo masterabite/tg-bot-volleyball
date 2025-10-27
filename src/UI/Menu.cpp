@@ -87,10 +87,15 @@ void Menu::set_default_functions() {
             }
         }
 
-        user->set_chat(message->chat);
-        user->set_last_sended_menu(
-            user->get_masBot()->get_tgBot()->getApi().sendMessage(message->chat->id, user->get_menu()->get_text(), 0, 0, keyboard)
-        );
+        try {
+            user->set_chat(message->chat);
+            user->set_last_sended_menu(
+                user->get_masBot()->get_tgBot()->getApi().sendMessage(message->chat->id, user->get_menu()->get_text(), 0, 0, keyboard)
+            );
+        }
+        catch (TgBot::TgException& e) {
+            printf("send message error for user %s: %s\n", user->get_list_name().c_str(), e.what());
+        }
     };
     
     proc_command = [](TgBot::Message::Ptr message, User* user, std::string cmd) {
@@ -118,7 +123,19 @@ void Menu::set_default_functions() {
         }
         if (cmd == "drop" && user->is_admin()) {
             MASBot* masBot = user->get_masBot();
-            masBot->get_events()->drop(message->text.substr(cmd.size()));
+            std::vector<std::string> args = user->get_menu()->parse_args(message->text);
+            int eventId = -1;
+            try {
+                eventId = std::stoi(args[1].c_str());
+            }
+            catch (std::exception& e) {
+                printf("menuMainEvents->proc_message error: %s\n", e.what());
+            }
+            std::string reason = "";
+            for (int i = 2; i < args.size(); ++i) {
+                reason += args[i] + " ";
+            }
+            masBot->get_events()->drop(eventId, reason);
         } 
 
         user->get_menu()->send_menu(message, user);  
@@ -142,6 +159,22 @@ std::string Menu::parse_command(const std::string& text) {
     }
     to_lower(command);
     return command;
+}
+
+std::vector<std::string> Menu::parse_args(const std::string& text) {
+    std::unordered_set<char> separators = {'\t', '\n', ' '};
+    size_t pos = 0;
+
+    std::vector<std::string> args;
+    while (pos < text.size()) {
+        for(; pos < text.size() && separators.count(text[pos]); ++pos);
+        std::string arg = "";
+        for(; pos < text.size() && !separators.count(text[pos]); ++pos) {
+            arg += text[pos];
+        }
+        args.push_back(arg);
+    }
+    return args;
 }
 
 void Menu::to_lower(std::string& message) {

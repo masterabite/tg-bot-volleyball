@@ -45,6 +45,7 @@ public:
     std::string get_text() {return text;}
     
     std::string parse_command(const std::string& text);
+    std::vector<std::string> parse_args(const std::string& text);
 
     void to_lower(std::string& s);
 
