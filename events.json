@@ -12,51 +12,7 @@
             "timeEnd": 0,
             "timeStart": 0,
             "type": "Игры"
-        },
-        {
-            "ID": 36,
-            "list": [
-                "Артём @masterabite",
-                "─⁠=⁠≡⁠Σ⁠(⁠╯⁠°⁠□⁠°⁠)⁠╯⁠︵⁠┻⁠┻ @Friday2121",
-                "Марусь @mir_moi868",
-                "Александр @aKirushev",
-                "Bella @jackycruper"
-            ],
-            "place": "Урбо, Бассейная, 38 К",
-            "places": 7,
-            "stats": {
-                "refuse": {
-                    "Andrew @sundevi": null,
-                    "Mark @mark_abroze": null
-                },
-                "wait": {
-                    "Rodion @rodionn2": null
-                }
-            },
-            "timeEnd": 1761942600,
-            "timeStart": 1761933600,
-            "type": "турнир"
-        },
-        {
-            "ID": 37,
-            "list": [
-                "Артём @masterabite"
-            ],
-            "place": "Бабушкина 119",
-            "places": 12,
-            "stats": {
-                "refuse": {
-                    "Andrew @sundevi": null,
-                    "Марусь @mir_moi868": null
-                },
-                "wait": {
-                    "Mark @mark_abroze": null
-                }
-            },
-            "timeEnd": 1762106400,
-            "timeStart": 1762099200,
-            "type": "Игры"
         }
     ],
-    "eventID": 37
+    "eventID": 38
 }

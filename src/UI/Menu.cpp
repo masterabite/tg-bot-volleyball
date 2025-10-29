@@ -112,6 +112,10 @@ void Menu::set_default_functions() {
 
     proc_message = [](TgBot::Message::Ptr message, User* user) {
 
+        if (user->get_fullname().empty() || user->get_list_name().empty()) {
+            user->set_chat(message->chat);
+        }
+
         std::string cmd = user->get_menu()->parse_command(message->text);
         if (cmd != "" && user->get_menu()->commandParser.check_key(cmd)) {
             user->get_menu()->proc_command(message, user, cmd);

@@ -62,11 +62,13 @@ void Events::reg_event(std::string parseString) {
 }
 
 void Events::drop(int eventId, std::string message) {
-    std::string totalMessage = "Произошла отмена события #" + to_string_short(eventId) + " по причине:"+message;
+    std::string totalMessage = "Произошла отмена события:" + to_string_short(eventId) + " по причине:"+message;
     json& event = get_event(eventId);
+    if (event["ID"] == -1) return;
     std::vector<json> eventList = event["list"];
     for (int i = 0; i < eventList.size(); ++i) { 
         User* user = masBot->get_user_by_list_name(eventList[i].get<std::string>());
+        if (user == nullptr) continue;
         try {
             TgBot::Message::Ptr userMessage = masBot->get_tgBot()->getApi().sendMessage(user->get_chat_id(), totalMessage);
             user->get_menu()->send_menu(userMessage, user);
