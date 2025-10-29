@@ -25,6 +25,7 @@ public:
 
     std::vector<nlohmann::json>& get_data() {return data;}
     void reg_event(std::string parse);
+    void erase_event(int eventId);
     void drop(int eventId, std::string message);
     std::string to_string(int eventId, User* user);
     std::string to_string_short(int id);

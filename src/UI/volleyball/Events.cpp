@@ -62,7 +62,7 @@ void Events::reg_event(std::string parseString) {
 }
 
 void Events::drop(int eventId, std::string message) {
-    std::string totalMessage = "Произошла отмена события:\n" + to_string_short(eventId) + "причина:"+message;
+    std::string totalMessage = "Произошла отмена события #" + to_string_short(eventId) + " по причине:"+message;
     json& event = get_event(eventId);
     std::vector<json> eventList = event["list"];
     for (int i = 0; i < eventList.size(); ++i) { 
@@ -75,7 +75,7 @@ void Events::drop(int eventId, std::string message) {
             printf("ERROR try send drop event to user \"%s (%s)\": %s", user->get_list_name().c_str(), user->get_fullname().c_str(), e.what());
         }
     }
-    data.pop_back();
+    erase_event(eventId);
 }
 
 std::string Events::to_string(int eventId, User* user) {
@@ -263,6 +263,15 @@ json& Events::get_event(int eventId) {
         if (data[i]["ID"] == eventId) return data[i];
     }
     return data[0];
+}
+
+void Events::erase_event(int eventId) {
+    for (int i = 0; i < data.size(); ++i) {
+        if (data[i]["ID"] == eventId) {
+            data.erase(data.begin()+i);
+            return;
+        }
+    }
 }
 
 int Events::actual_size() {

@@ -104,6 +104,7 @@ MASBot::MASBot(std::string token): tgBot(token) {
         Events* events = masBot->get_events();
         json& event = events->get_event(eventId);
         if (event["ID"] == -1) {
+            user->get_menu()->send_menu(message, user);  
             return;
         }
         user->set_event_id(eventId);
@@ -313,6 +314,16 @@ void MASBot::tgBot_start() {
     }
     catch (TgBot::TgException& e) {
         printf("error: %s\n", e.what());
+        delete(masBot);
+        std::string botToken;
+
+        #if BUILD_MODE < 2     
+        botToken = "7298813441:AAERfbqWxHg7IYLEDn-PAlQjHVyv7gCoUDA";
+        #else
+        botToken = "8270523151:AAHjjY2oMAI2l22QuR12gKRvBp0ISK_CAUE";
+        #endif
+        
+        MASBot masBot(botToken);
     }
 }
 
