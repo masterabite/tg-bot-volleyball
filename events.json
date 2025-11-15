@@ -12,7 +12,49 @@
             "timeEnd": 0,
             "timeStart": 0,
             "type": "Игры"
+        },
+        {
+            "ID": 39,
+            "list": [
+                "Марусь @mir_moi868",
+                "Артём @masterabite",
+                "Desh @deshkill",
+                "Александр @aKirushev",
+                "Rodion @rodionn2"
+            ],
+            "place": "Урбо, Бассейная, 38 К",
+            "places": 6,
+            "stats": {
+                "refuse": {
+                    "Mark @mark_abroze": null,
+                    "─⁠=⁠≡⁠Σ⁠(⁠╯⁠°⁠□⁠°⁠)⁠╯⁠︵⁠┻⁠┻ @Friday2121": null
+                },
+                "wait": {}
+            },
+            "timeEnd": 1762115400,
+            "timeStart": 1762106400,
+            "type": "Игры"
+        },
+        {
+            "ID": 40,
+            "list": [
+                "Марусь @mir_moi868",
+                "Артём @masterabite",
+                "Александр @aKirushev"
+            ],
+            "place": "Урбо, Бассейная, 38 К",
+            "places": 6,
+            "stats": {
+                "refuse": {
+                    "Desh @deshkill": null,
+                    "Mark @mark_abroze": null
+                },
+                "wait": {}
+            },
+            "timeEnd": 1762720200,
+            "timeStart": 1762711200,
+            "type": "Игры"
         }
     ],
-    "eventID": 38
+    "eventID": 40
 }

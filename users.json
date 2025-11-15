@@ -1,7 +1,7 @@
 {
     "": {
         "chatId": 933507387,
-        "eventId": 37,
+        "eventId": 40,
         "menu": "event",
         "nickname": "",
         "prior": 1,
@@ -9,7 +9,7 @@
     },
     "Friday2121": {
         "chatId": 786648998,
-        "eventId": 36,
+        "eventId": 40,
         "fullname": "─⁠=⁠≡⁠Σ⁠(⁠╯⁠°⁠□⁠°⁠)⁠╯⁠︵⁠┻⁠┻ ",
         "listname": "─⁠=⁠≡⁠Σ⁠(⁠╯⁠°⁠□⁠°⁠)⁠╯⁠︵⁠┻⁠┻ @Friday2121",
         "menu": "event",
@@ -19,7 +19,7 @@
     },
     "aKirushev": {
         "chatId": 148877630,
-        "eventId": 37,
+        "eventId": 40,
         "fullname": "Александр ",
         "listname": "Александр @aKirushev",
         "menu": "event",
@@ -29,7 +29,9 @@
     },
     "deshkill": {
         "chatId": 715018159,
-        "eventId": 37,
+        "eventId": 40,
+        "fullname": "Desh ",
+        "listname": "Desh @deshkill",
         "menu": "event",
         "nickname": "",
         "prior": 1,
@@ -37,7 +39,7 @@
     },
     "jackycruper": {
         "chatId": 686657904,
-        "eventId": 37,
+        "eventId": 40,
         "fullname": "Bella ",
         "listname": "Bella @jackycruper",
         "menu": "event",
@@ -47,7 +49,7 @@
     },
     "lackiich": {
         "chatId": 388249358,
-        "eventId": 37,
+        "eventId": 40,
         "menu": "event",
         "nickname": "",
         "prior": 1,
@@ -55,7 +57,7 @@
     },
     "mark_abroze": {
         "chatId": 1235728993,
-        "eventId": 37,
+        "eventId": 40,
         "fullname": "Mark Abroze",
         "listname": "Mark @mark_abroze",
         "menu": "event",
@@ -65,27 +67,27 @@
     },
     "masterabite": {
         "chatId": 679555913,
-        "eventId": 36,
+        "eventId": 40,
         "fullname": "Артём Михайлов",
         "listname": "Артём @masterabite",
-        "menu": "event",
+        "menu": "main",
         "nickname": "",
         "prior": 1,
         "type": "admin"
     },
     "mir_moi868": {
         "chatId": 876647932,
-        "eventId": 36,
+        "eventId": 40,
         "fullname": "Марусь ",
         "listname": "Марусь @mir_moi868",
-        "menu": "event",
+        "menu": "events",
         "nickname": "",
         "prior": 1,
         "type": "admin"
     },
     "rodionn2": {
         "chatId": 5118959933,
-        "eventId": 37,
+        "eventId": 40,
         "fullname": "Rodion Rodj",
         "listname": "Rodion @rodionn2",
         "menu": "event",
@@ -95,7 +97,7 @@
     },
     "sundevi": {
         "chatId": 249031814,
-        "eventId": 37,
+        "eventId": 40,
         "fullname": "Andrew Voronin",
         "listname": "Andrew @sundevi",
         "menu": "event",
@@ -105,7 +107,7 @@
     },
     "wayelysium": {
         "chatId": 1998415299,
-        "eventId": 37,
+        "eventId": 40,
         "fullname": "Дмитрий Капустин",
         "listname": "Дмитрий @wayelysium",
         "menu": "event",
